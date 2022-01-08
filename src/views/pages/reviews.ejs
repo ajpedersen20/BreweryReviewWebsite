@@ -1,0 +1,39 @@
+<%- include('../partials/header') %>
+<%- include('../partials/menu') %>
+
+<!--Filter Breweries Form-->
+<br>
+<form action="/reviews/filter" method="post">
+    <div class="form-row">
+        <div class="form-group col-3"></div>
+        <div class="form-group col-5">
+            <input name="filter" type="text" class="form-control" placeholder="Enter brewery name" required>
+        </div>
+        <div class="form-group col-1">
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
+    </div>
+</form>
+<br>
+
+<!--Display Reviews HTML-->
+<div class="container">
+    <table class="table table-bordered table-centered">
+        <tr>
+            <th rowspan="1">Brewery</th>
+            <th rowspan="1">Review</th>
+            <th rowspan="1">Date</th>
+        </tr>
+        <% if(breweries){ %>
+            <% breweries.forEach(function(item){ %>
+                <tr>
+                    <td><%- item.brewery_name %></td>
+                    <td><%- item.review %></td>
+                    <td><%- item.review_date %></td>
+                </tr>
+            <% }); %>
+        <% } %>
+    </table>
+</div>
+
+<%- include('../partials/footer') %>

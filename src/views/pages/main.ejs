@@ -1,0 +1,73 @@
+<%- include('../partials/header') %>
+<%- include('../partials/menu') %>
+
+<!--Search Breweries Form-->
+<br>
+<form action="/home/search" method="get">
+    <div class="form-row">
+        <div class="form-group col-3"></div>
+        <div class="form-group col-5">
+            <input name="search" type="text" class="form-control" placeholder="Enter city" required>
+        </div>
+        <div class="form-group col-1">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </div>
+</form>
+<br>
+
+<!--Display Breweries HTML-->
+<% if (error) { %>
+    <div class="alert alert-danger"><%- message %></div>
+<% } %>
+<% if (breweries) { %>
+    <div class="container">
+    <div class="card-columns">
+    <div class="col-1"></div>
+    <div class="col-10">
+    <% breweries.forEach(function(item){ %>
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title"><%- item.name %></h4>
+            <p class="card-text"><%- item.brewery_type %></p>
+            <p class="card-text"><%- item.street %></p>
+            <%
+                let reviewButton = '<a href="#myModal" data-toggle="modal" class="btn btn-primary" onclick="openModal(\'' + item.name + '\')">Add Review</a>';
+            %>
+            <%- reviewButton %>
+          </div>
+        </div>
+    <% }); %>
+    </div>
+    </div>
+    </div>
+
+<% } %>
+
+<!-- Modal HTML -->
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Add Review</h4>
+        </div>
+        <div class="modal-body">
+          <form action="/reviews/add" method="post">
+            <div class="form-group">
+              <label for="breweryName">Brewery Name:</label>
+              <input class="form-control" type="text" id="breweryName" name="breweryName" readonly>
+            </div>
+            <div class="form-group">
+              <label for="reviewBody">Enter Review Here:</label>
+              <textarea class="form-control" id="reviewBody" name="reviewBody" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary">Submit Review</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>
